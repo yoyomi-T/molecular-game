@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高分子化合物パズル</title> <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="start-screen">
+        <h1>高分子化合物パズル</h1> <p>化学の基本を楽しく学ぼう！</p>
+        <button id="start-game-button">ゲームを始める</button>
+        <button id="show-stage-select-button">ステージ選択</button> </div>
+    <nav class="side-menu-container">
+        <button id="menu-toggle" class="menu-toggle">
+            <span class="bar"></span> <span class="bar"></span> <span class="bar"></span> </button>
+        <div id="side-menu" class="side-menu">
+            <h3>ステージ選択</h3> <ul id="stage-list">
+                </ul>
+        </div>
+    </nav>
+    
+    <main id="game-container" style="display: none;">
+        <header id="game-header">
+            <h1>高分子化合物パズル</h1> <p>単糖を組み合わせて二糖を作ろう！</p>
+        </header>
+
+        <section id="target-molecule-section">
+            <h2>目標分子</h2>
+            <div class="molecule-display">
+                <img id="target-molecule-img" src="" alt="目標分子">
+                <p id="target-molecule-name">スクロース</p>
+            </div>
+        </section>
+
+        <section id="build-area-section">
+            <h2>結合エリア</h2>
+            <div id="build-area" class="drop-target">
+                <p>モノマーをここにドラッグ＆ドロップしてください。</p>
+            </div>
+            <button id="check-button">結合をチェック！</button>
+            <p id="feedback-message" class="message"></p>
+        </section>
+
+        <div id="karuta-game-ui" style="display: none;">
+            <div class="karuta-score-area">
+                <p>得点: <span id="karuta-score">0</span> / <span id="karuta-total-cards">0</span></p>
+                <p id="karuta-timer">残り時間: --秒</p>
+            </div>
+            <button id="read-card-button">読み上げる</button>
+            <p id="karuta-message" class="message"></p>
+        </div>
+        <section id="monomer-pool-section">
+            <h2>利用可能なモノマー</h2>
+            <div id="monomer-pool">
+                </div>
+        </section>
+    </main>
+
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>

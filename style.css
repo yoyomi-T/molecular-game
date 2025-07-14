@@ -1,0 +1,617 @@
+/* ==========================================================
+   全体的な設定 (General Styles)
+   ========================================================== */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* フォントの種類 */
+    background-color: #e0f2f7; /* 背景色：明るい水色 */
+    color: #333; /* 文字色：濃いグレー */
+    margin: 0; /* ページの余白をなくす */
+    padding: 0px; /* ページ全体のパディング */
+    display: flex; /* Flexboxを使って要素を配置 */
+    flex-direction: column; /* 縦方向に要素を並べる */
+    align-items: center; /* 横方向の中央揃え */
+    min-height: 100vh; /* 画面全体の高さを確保 */
+    justify-content: center; /* bodyの子要素を中央揃えにする */
+}
+
+#start-screen {
+    display: flex; /* Flexboxを使って内部の要素を中央配置 */
+    flex-direction: column; /* 縦方向に要素を並べる */
+    align-items: center; /* 横方向の中央揃え */
+    justify-content: center; /* 縦方向の中央揃え */
+    width: 100%; /* 幅いっぱい */
+    height: 100vh; /* 画面全体の高さ */
+    background-color: #fff; /* 背景色：白 */
+    border-radius: 10px; /* 角を丸くする */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* 影 */
+    text-align: center; /* テキスト中央揃え */
+}
+
+#start-screen h1 {
+    color: #007bff;
+    font-size: 3em; /* 大きなフォントサイズ */
+    margin-bottom: 20px;
+}
+
+#start-screen p {
+    font-size: 1.2em;
+    color: #555;
+    margin-bottom: 40px;
+}
+
+#start-screen button {
+    padding: 15px 30px;
+    font-size: 1.3em;
+    background-color: #28a745; /* 「ゲームを始める」ボタンの色 */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    margin: 10px; /* ボタン間の余白 */
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
+
+#start-screen button:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+/* 「ステージ選択」ボタンの特別なスタイル（もし必要なら） */
+#start-screen #show-stage-select-button {
+    background-color: #007bff; /* 青系の色 */
+}
+
+#start-screen #show-stage-select-button:hover {
+    background-color: #0056b3;
+}
+
+
+/* 既存のヘッダーのスタイルは、ゲーム画面が表示されたときにのみ適用されるようになります */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-top: 20px; /* ヘッダーの上部に少しパディングを追加 */
+}
+
+/* ゲームコンテナは、Flexboxの代わりにGridレイアウトを適用 */
+#game-container {
+    display: grid; /* これにより、JSでdisplay='grid'にしたときに適用される */
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto auto auto; /* 行の高さはコンテンツに応じて自動調整 */
+    gap: 25px;
+    width: 90%;
+    max-width: 1200px;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    /* margin-top: 20px; */ /* headerのpadding-topと合わせる */
+}
+
+/* ヘッダーのスタイル (ゲーム画面用)  */
+#game-header { /* IDを使って指定 */
+    grid-column: 1 / -1; /* グリッドの1列目から最後の列まで全てを占有 */
+    text-align: center;
+    margin-bottom: 30px;
+    padding-top: 0; /* bodyのpaddingを0にしたので、headerのpadding-topも調整 */
+    padding-bottom: 5px; /* 下に少しパディング */
+    border-bottom: 2px solid #ccc; /* 下線を追加 */
+}
+
+#game-header h1 {
+    color: #007bff;
+    margin-bottom: 5px;
+}
+#game-header p {
+    color: #555;
+    margin-top: 0;
+}
+
+/* 各セクション（目標、結合エリア、モノマープール）のスタイル */
+section {
+    padding: 20px; /* 内側の余白 */
+    border: 1px solid #ddd; /* 細い境界線 */
+    border-radius: 8px; /* 角を丸くする */
+    background-color: #f8f9fa; /* 背景色：薄いグレー */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05); /* 内側に影 */
+}
+
+/* 目標分子と結合エリアを横に並べるために、grid-column を指定 */
+#target-molecule-section {
+    grid-column: 1 / 2; /* 1列目 */
+    grid-row: 2 / 3; /* 2行目 */
+}
+#build-area-section {
+    grid-column: 2 / 4; /* 2列目から4列目まで（実質2列目と3列目） */
+    grid-row: 2 / 3; /* 2行目 */
+    display: flex; /* 内部をFlexboxで配置し、ボタンとエリアを縦に並べる */
+    flex-direction: column;
+    justify-content: flex-start; /* 上寄せ */
+    align-items: center; /* 横中央 */
+}
+#build-area-section #build-area { /* 結合エリア自体は#build-area-sectionの子要素 */
+    width: 100%; /* 親要素の幅いっぱいに広げる */
+    /* min-heightは維持 */
+}
+#build-area-section button { /* チェックボタンのスタイル調整 */
+    margin-top: 15px; /* 上の余白を調整 */
+}
+
+
+#monomer-pool-section {
+    grid-column: 1 / -1; /* 1列目から最後の列まで全てを占有 */
+    grid-row: 3 / 4; /* 3行目 */
+}
+/* ==========================================================
+   目標分子表示エリア (Target Molecule Display)
+   ========================================================== */
+.molecule-display {
+    text-align: center; /* テキストと画像を中央揃え */
+    margin-bottom: 20px; /* 下に余白 */
+}
+
+.molecule-display img {
+    max-width: 150px; /* 最大幅 */
+    height: auto; /* 高さは自動調整 */
+    border: 1px solid #eee; /* 画像の境界線 */
+    padding: 5px; /* 画像の内側に余白 */
+    background-color: #fff; /* 画像の背景色 */
+    border-radius: 5px; /* 角を丸くする */
+}
+
+/* ==========================================================
+   結合エリア (Build Area)
+   ========================================================== */
+#build-area {
+    min-height: 200px; /* 最小の高さ */
+    border: 3px dashed #007bff; /* 破線の境界線：青 */
+    background-color: #e9f7fe; /* 背景色：薄い水色 */
+    display: flex; /* Flexboxを使って内部の要素を配置 */
+    justify-content: center; /* 横方向の中央揃え */
+    align-items: center; /* 縦方向の中央揃え */
+    flex-wrap: wrap; /* ドロップされた要素が複数並ぶように折り返す */
+    gap: 10px; /* 要素間の隙間 */
+    padding: 15px; /* 内側の余白 */
+    border-radius: 8px; /* 角を丸くする */
+    transition: background-color 0.3s ease, border-color 0.3s ease; /* 背景色と境界線の変化を滑らかに */
+}
+
+/* ドラッグオーバー時の結合エリアのスタイル */
+#build-area.drag-over {
+    background-color: #cce7fa; /* 背景色を濃くする */
+    border-color: #0056b3; /* 境界線の色を濃くする */
+}
+
+/* ==========================================================
+   モノマーカード (Monomer Card)
+   ========================================================== */
+.monomer-card {
+    background-color: #ffe0b2; /* 背景色：淡いオレンジ */
+    border: 1px solid #ff9800; /* 境界線：オレンジ */
+    padding: 10px; /* 内側の余白 */
+    border-radius: 5px; /* 角を丸くする */
+    text-align: center; /* テキストを中央揃え */
+    cursor: grab; /* マウスカーソルを「つかむ」アイコンに */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* 変化を滑らかに */
+    width: 120px; /* カードの幅を固定 */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* 影 */
+}
+
+/* モノマーカードにマウスを乗せた時のスタイル */
+.monomer-card:hover {
+    transform: translateY(-3px); /* 少し上に移動 */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* 影を濃くする */
+}
+
+.monomer-card img {
+    max-width: 100px; /* 画像の最大幅 */
+    height: auto; /* 高さは自動調整 */
+    margin-bottom: 5px; /* 下に余白 */
+}
+
+/* ==========================================================
+   モノマープール (Monomer Pool)
+   ========================================================== */
+#monomer-pool {
+    display: flex; /* Flexboxを使って内部の要素を配置 */
+    flex-wrap: wrap; /* 要素が収まらない場合に折り返す */
+    gap: 15px; /* 要素間の隙間 */
+    justify-content: center; /* 横方向の中央揃え */
+}
+
+/* ==========================================================
+   ボタン (Buttons)
+   ========================================================== */
+button {
+    margin-top: 20px; /* 上に余白 */
+    padding: 12px 25px; /* 内側の余白 */
+    font-size: 1.1em; /* フォントサイズ */
+    background-color: #007bff; /* 背景色：青 */
+    color: white; /* 文字色：白 */
+    border: none; /* 境界線をなくす */
+    border-radius: 5px; /* 角を丸くする */
+    cursor: pointer; /* マウスカーソルをポインターに */
+    transition: background-color 0.3s ease, transform 0.1s ease; /* 変化を滑らかに */
+}
+
+button:hover {
+    background-color: #0056b3; /* ホバー時の背景色を濃くする */
+    transform: translateY(-1px); /* 少し上に移動 */
+}
+
+/* ==========================================================
+   メッセージ表示エリア (Message Display)
+   ========================================================= */
+.message {
+    text-align: center; /* テキストを中央揃え */
+    margin-top: 20px; /* 上に余白 */
+    font-size: 1.1em; /* フォントサイズ */
+    font-weight: bold; /* フォントを太くする */
+}
+
+.message.success {
+    color: #28a745; /* 成功メッセージの色：緑 */
+}
+
+.message.error {
+    color: #dc3545; /* エラーメッセージの色：赤 */
+}
+
+/* ==========================================================
+   サイドメニューとハンバーガーメニュー (Side Menu & Hamburger Menu)
+   ========================================================== */
+
+/* サイドメニューのコンテナ（ハンバーガーメニューとメニュー本体を包む） */
+.side-menu-container {
+    position: fixed; /* 画面に固定 */
+    top: 20px; /* 上からの位置 */
+    left: 20px; /* 左からの位置 */
+    z-index: 1000; /* 他の要素より手前に表示（最も手前） */
+}
+
+/* ハンバーガーメニューボタン */
+.menu-toggle {
+    width: 40px; /* 幅 */
+    height: 40px; /* 高さ */
+    background: #007bff; /* ボタンの背景色：青 */
+    border: none; /* 境界線をなくす */
+    border-radius: 5px; /* 角を丸くする */
+    display: flex; /* Flexboxを使って内部の棒を配置 */
+    flex-direction: column; /* 縦方向に棒を並べる */
+    justify-content: space-around; /* 棒の間に均等なスペース */
+    align-items: center; /* 横方向の中央揃え */
+    padding: 8px; /* 内側の余白 */
+    cursor: pointer; /* マウスカーソルをポインターに */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* 影 */
+    transition: background-color 0.3s ease; /* 背景色の変化を滑らかに */
+}
+
+/* ハンバーガーメニューボタンにマウスを乗せた時のスタイル */
+.menu-toggle:hover {
+    background-color: #0056b3; /* 背景色を濃くする */
+}
+
+/* ハンバーガーメニューの各棒 */
+.menu-toggle .bar {
+    width: 100%; /* 親要素（ボタン）の幅に合わせる */
+    height: 4px; /* 棒の高さ */
+    background-color: white; /* 棒の色：白 */
+    border-radius: 2px; /* 棒の角を丸くする */
+    transition: all 0.3s ease; /* 全てのプロパティの変化を滑らかに */
+}
+
+/* サイドメニュー本体 */
+.side-menu {
+    position: fixed; /* 画面に固定 */
+    top: 0; /* 上からの位置 */
+    left: -300px; /* 初期状態では画面の左端より外に隠しておく */
+    width: 280px; /* メニューの幅 */
+    height: 100%; /* 高さ（画面全体） */
+    background-color: #333; /* メニューの背景色：濃いグレー */
+    color: white; /* 文字色：白 */
+    padding: 60px 20px 20px; /* 内側の余白（上部はボタンと重ならないように多めに） */
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3); /* 右側に影 */
+    transition: left 0.3s ease; /* leftプロパティの変化を滑らかに（スライドアニメーション） */
+    z-index: 999; /* ボタンより奥に（ボタンが手前に来るように） */
+    box-sizing: border-box; /* paddingがwidthに含まれるように計算される */
+    overflow-y: auto; /* コンテンツが高さに収まらない場合に縦スクロールバーを表示 */
+}
+
+/* メニューが表示された状態（JavaScriptで 'open' クラスが付与される） */
+.side-menu.open {
+    left: 0; /* 画面内にスライドして表示 */
+}
+
+.side-menu h3 {
+    margin-top: 0; /* 上の余白をなくす */
+    margin-bottom: 25px; /* 下に余白 */
+    color: #007bff; /* ステージ選択のタイトル色：青 */
+    text-align: center; /* 中央揃え */
+}
+
+.side-menu ul {
+    list-style: none; /* リストの黒丸をなくす */
+    padding: 0; /* リストのパディングをなくす */
+    margin: 0; /* リストのマージンをなくす */
+}
+
+.side-menu ul li {
+    margin-bottom: 15px; /* 各リストアイテムの下に余白 */
+}
+
+.side-menu ul li button {
+    display: block; /* ボタンをブロック要素にする（幅いっぱいに広がる） */
+    width: 100%; /* 幅を親要素の100%に */
+    padding: 12px; /* 内側の余白 */
+    background-color: #555; /* ステージ選択ボタンの背景色 */
+    color: white; /* 文字色：白 */
+    border: none; /* 境界線をなくす */
+    border-radius: 5px; /* 角を丸くする */
+    text-align: left; /* テキストを左揃え */
+    font-size: 1.1em; /* フォントサイズ */
+    cursor: pointer; /* マウスカーソルをポインターに */
+    transition: background-color 0.2s ease; /* 背景色の変化を滑らかに */
+}
+
+/* ステージ選択ボタンにマウスを乗せた時のスタイル */
+.side-menu ul li button:hover {
+    background-color: #007bff; /* ホバー時の背景色：青 */
+}
+/* ==========================================================
+   かるたゲームUI (Karuta Game UI) - 調整あり
+   ========================================================== */
+#karuta-game-ui {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    background-color: #f0f8ff;
+    border: 1px solid #cce0ff;
+    border-radius: 8px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+    margin-bottom: 25px;
+}
+
+.karuta-score-area {
+    display: flex;
+    gap: 30px;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #0056b3;
+    margin-bottom: 10px;
+}
+
+#karuta-score, #karuta-total-cards, #karuta-timer {
+    color: #dc3545;
+}
+
+#read-card-button {
+    background-color: #6f42c1;
+    padding: 15px 30px;
+    font-size: 1.2em;
+}
+
+#read-card-button:hover {
+    background-color: #563198;
+}
+
+.karuta-card-display {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    padding: 10px;
+    border: 2px dashed #aaa;
+    border-radius: 8px;
+    min-height: 250px;
+    background-color: #fdfdfd;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.karuta-card {
+    background-color: #fff;
+    border: 2px solid #a6d96a;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    width: 140px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.karuta-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+    background-color: #e6ffe6;
+}
+
+.karuta-card img {
+    max-width: 120px;
+    height: auto;
+    margin-bottom: 8px;
+}
+
+/* ★かるた札の名前と化学式のスタイル */
+.karuta-card-name {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #333;
+    margin: 0 0 5px 0; /* 下に少しマージンを追加 */
+}
+
+.karuta-card-formula {
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace; /* 化学式向けに等幅フォントも検討 */
+    font-size: 0.9em; /* 化学式は少し小さめに */
+    color: #555;
+    margin: 0;
+    /* 下付き文字の調整 */
+    line-height: 1.2; /* 行間を調整 */
+}
+
+/* 正解・不正解時のアニメーションと表示 */
+.karuta-card.correct {
+    border-color: #28a745;
+    background-color: #d4edda;
+    animation: fadeOut 1.5s forwards;
+    pointer-events: none;
+}
+
+.karuta-card.incorrect {
+    border-color: #dc3545;
+    background-color: #f8d7da;
+    animation: shake 0.5s;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.8); display: none; }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* ==========================================================
+   レスポンシブデザイン (Responsive Design) 
+   ========================================================== */
+
+/* 画面幅が768px以下のデバイス（タブレット縦向き、スマホ横向きなど） */
+@media (max-width: 768px) {
+    body {
+        padding: 10px; /* 全体のパディングを少し減らす */
+    }
+
+    #start-screen h1 {
+        font-size: 2.5em; /* フォントサイズを少し小さく */
+    }
+    #start-screen p {
+        font-size: 1em;
+    }
+    #start-screen button {
+        padding: 12px 20px;
+        font-size: 1.1em;
+    }
+
+    #game-container {
+        grid-template-columns: 1fr; /* 1カラム表示にする */
+        grid-template-rows: auto auto auto auto; /* ヘッダー、目標、結合、モノマーの4行 */
+        gap: 15px; /* 隙間を小さく */
+        padding: 15px; /* 内側のパディングを減らす */
+        width: 95%; /* 幅を少し広げる */
+    }
+
+    /* 各セクションを縦に並べるようにグリッド配置を変更 */
+    #game-header {
+        grid-column: 1 / -1; /* 1列目全体を占有 */
+        grid-row: 1 / 2; /* 1行目 */
+        margin-bottom: 15px; /* 下の余白を調整 */
+    }
+
+    #target-molecule-section {
+        grid-column: 1 / -1; /* 1列目全体を占有 */
+        grid-row: 2 / 3; /* 2行目 */
+    }
+
+    #build-area-section {
+        grid-column: 1 / -1; /* 1列目全体を占有 */
+        grid-row: 3 / 4; /* 3行目 */
+    }
+
+    #monomer-pool-section {
+        grid-column: 1 / -1; /* 1列目全体を占有 */
+        grid-row: 4 / 5; /* 4行目 */
+    }
+
+    .monomer-card {
+        width: 100px; /* カードの幅を小さく */
+        padding: 8px; /* パディングも小さく */
+    }
+
+    .monomer-card img {
+        max-width: 80px; /* 画像の幅を小さく */
+    }
+
+    /* メッセージやボタンのフォントサイズ調整 */
+    button {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+
+    .message {
+        font-size: 1em;
+    }
+
+    /* ハンバーガーメニューとサイドメニュー */
+    .side-menu-container {
+        top: 10px;
+        left: 10px;
+    }
+    .side-menu {
+        width: 250px; /* メニューの幅を少し狭める */
+        padding: 50px 15px 15px; /* パディングを調整 */
+    }
+    /* メニューが開いたときにメインコンテンツがずれないようにする（不要な場合も考慮） */
+    /*
+    body.menu-open main#game-container {
+        transform: translateX(0);
+    }
+    */
+}
+
+/* 画面幅が480px以下のデバイス（スマホ縦向きなど） */
+@media (max-width: 480px) {
+    #start-screen h1 {
+        font-size: 2em;
+    }
+    #start-screen p {
+        font-size: 0.9em;
+    }
+    #start-screen button {
+        font-size: 1em;
+        padding: 10px 15px;
+    }
+
+    #game-container {
+        padding: 10px;
+        gap: 10px;
+    }
+
+    section {
+        padding: 15px;
+    }
+
+    .monomer-card {
+        width: 90px;
+        padding: 5px;
+    }
+
+    .monomer-card img {
+        max-width: 70px;
+    }
+
+    h2 {
+        font-size: 1.2em;
+    }
+
+    .molecule-display img {
+        max-width: 120px;
+    }
+
+    #build-area {
+        min-height: 150px;
+        padding: 10px;
+    }
+}
