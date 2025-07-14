@@ -1,0 +1,282 @@
+/* ==========================================================
+   全体的な設定 (General Styles)
+   ========================================================== */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* フォントの種類 */
+    background-color: #e0f2f7; /* 背景色：明るい水色 */
+    color: #333; /* 文字色：濃いグレー */
+    margin: 0; /* ページの余白をなくす */
+    padding: 20px; /* ページ全体のパディング */
+    display: flex; /* Flexboxを使って要素を配置 */
+    flex-direction: column; /* 縦方向に要素を並べる */
+    align-items: center; /* 横方向の中央揃え */
+    min-height: 100vh; /* 画面全体の高さを確保 */
+}
+
+/* ヘッダーのスタイル */
+header {
+    text-align: center; /* テキストを中央揃え */
+    margin-bottom: 30px; /* 下に余白 */
+}
+
+h1 {
+    color: #007bff; /* メインタイトルの色：青 */
+    margin-bottom: 5px; /* 下に余白 */
+}
+
+h2 {
+    color: #28a745; /* セクションタイトルの色：緑 */
+    border-bottom: 2px solid #28a745; /* 下線 */
+    padding-bottom: 5px; /* 下線とテキストの間に余白 */
+    margin-bottom: 15px; /* 下に余白 */
+}
+
+/* ==========================================================
+   ゲームコンテナのレイアウト (Game Container Layout)
+   ========================================================== */
+#game-container {
+    display: grid; /* Gridレイアウトを使用 */
+    /* 3つのカラム（目標、結合エリア、モノマープール）の幅を設定 */
+    grid-template-columns: 1fr 2fr 1fr; /* 1:2:1の比率 */
+    gap: 25px; /* グリッドアイテム間の隙間 */
+    width: 90%; /* 幅を親要素の90%に設定 */
+    max-width: 1200px; /* 最大幅 */
+    background-color: #fff; /* 背景色：白 */
+    padding: 30px; /* 内側の余白 */
+    border-radius: 10px; /* 角を丸くする */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* 影 */
+}
+
+/* 各セクション（目標、結合エリア、モノマープール）のスタイル */
+section {
+    padding: 20px; /* 内側の余白 */
+    border: 1px solid #ddd; /* 細い境界線 */
+    border-radius: 8px; /* 角を丸くする */
+    background-color: #f8f9fa; /* 背景色：薄いグレー */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05); /* 内側に影 */
+}
+
+/* ==========================================================
+   目標分子表示エリア (Target Molecule Display)
+   ========================================================== */
+.molecule-display {
+    text-align: center; /* テキストと画像を中央揃え */
+    margin-bottom: 20px; /* 下に余白 */
+}
+
+.molecule-display img {
+    max-width: 150px; /* 最大幅 */
+    height: auto; /* 高さは自動調整 */
+    border: 1px solid #eee; /* 画像の境界線 */
+    padding: 5px; /* 画像の内側に余白 */
+    background-color: #fff; /* 画像の背景色 */
+    border-radius: 5px; /* 角を丸くする */
+}
+
+/* ==========================================================
+   結合エリア (Build Area)
+   ========================================================== */
+#build-area {
+    min-height: 200px; /* 最小の高さ */
+    border: 3px dashed #007bff; /* 破線の境界線：青 */
+    background-color: #e9f7fe; /* 背景色：薄い水色 */
+    display: flex; /* Flexboxを使って内部の要素を配置 */
+    justify-content: center; /* 横方向の中央揃え */
+    align-items: center; /* 縦方向の中央揃え */
+    flex-wrap: wrap; /* ドロップされた要素が複数並ぶように折り返す */
+    gap: 10px; /* 要素間の隙間 */
+    padding: 15px; /* 内側の余白 */
+    border-radius: 8px; /* 角を丸くする */
+    transition: background-color 0.3s ease, border-color 0.3s ease; /* 背景色と境界線の変化を滑らかに */
+}
+
+/* ドラッグオーバー時の結合エリアのスタイル */
+#build-area.drag-over {
+    background-color: #cce7fa; /* 背景色を濃くする */
+    border-color: #0056b3; /* 境界線の色を濃くする */
+}
+
+/* ==========================================================
+   モノマーカード (Monomer Card)
+   ========================================================== */
+.monomer-card {
+    background-color: #ffe0b2; /* 背景色：淡いオレンジ */
+    border: 1px solid #ff9800; /* 境界線：オレンジ */
+    padding: 10px; /* 内側の余白 */
+    border-radius: 5px; /* 角を丸くする */
+    text-align: center; /* テキストを中央揃え */
+    cursor: grab; /* マウスカーソルを「つかむ」アイコンに */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* 変化を滑らかに */
+    width: 120px; /* カードの幅を固定 */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* 影 */
+}
+
+/* モノマーカードにマウスを乗せた時のスタイル */
+.monomer-card:hover {
+    transform: translateY(-3px); /* 少し上に移動 */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* 影を濃くする */
+}
+
+.monomer-card img {
+    max-width: 100px; /* 画像の最大幅 */
+    height: auto; /* 高さは自動調整 */
+    margin-bottom: 5px; /* 下に余白 */
+}
+
+/* ==========================================================
+   モノマープール (Monomer Pool)
+   ========================================================== */
+#monomer-pool {
+    display: flex; /* Flexboxを使って内部の要素を配置 */
+    flex-wrap: wrap; /* 要素が収まらない場合に折り返す */
+    gap: 15px; /* 要素間の隙間 */
+    justify-content: center; /* 横方向の中央揃え */
+}
+
+/* ==========================================================
+   ボタン (Buttons)
+   ========================================================== */
+button {
+    margin-top: 20px; /* 上に余白 */
+    padding: 12px 25px; /* 内側の余白 */
+    font-size: 1.1em; /* フォントサイズ */
+    background-color: #007bff; /* 背景色：青 */
+    color: white; /* 文字色：白 */
+    border: none; /* 境界線をなくす */
+    border-radius: 5px; /* 角を丸くする */
+    cursor: pointer; /* マウスカーソルをポインターに */
+    transition: background-color 0.3s ease, transform 0.1s ease; /* 変化を滑らかに */
+}
+
+button:hover {
+    background-color: #0056b3; /* ホバー時の背景色を濃くする */
+    transform: translateY(-1px); /* 少し上に移動 */
+}
+
+/* ==========================================================
+   メッセージ表示エリア (Message Display)
+   ========================================================= */
+.message {
+    text-align: center; /* テキストを中央揃え */
+    margin-top: 20px; /* 上に余白 */
+    font-size: 1.1em; /* フォントサイズ */
+    font-weight: bold; /* フォントを太くする */
+}
+
+.message.success {
+    color: #28a745; /* 成功メッセージの色：緑 */
+}
+
+.message.error {
+    color: #dc3545; /* エラーメッセージの色：赤 */
+}
+
+/* ==========================================================
+   サイドメニューとハンバーガーメニュー (Side Menu & Hamburger Menu)
+   ========================================================== */
+
+/* サイドメニューのコンテナ（ハンバーガーメニューとメニュー本体を包む） */
+.side-menu-container {
+    position: fixed; /* 画面に固定 */
+    top: 20px; /* 上からの位置 */
+    left: 20px; /* 左からの位置 */
+    z-index: 1000; /* 他の要素より手前に表示（最も手前） */
+}
+
+/* ハンバーガーメニューボタン */
+.menu-toggle {
+    width: 40px; /* 幅 */
+    height: 40px; /* 高さ */
+    background: #007bff; /* ボタンの背景色：青 */
+    border: none; /* 境界線をなくす */
+    border-radius: 5px; /* 角を丸くする */
+    display: flex; /* Flexboxを使って内部の棒を配置 */
+    flex-direction: column; /* 縦方向に棒を並べる */
+    justify-content: space-around; /* 棒の間に均等なスペース */
+    align-items: center; /* 横方向の中央揃え */
+    padding: 8px; /* 内側の余白 */
+    cursor: pointer; /* マウスカーソルをポインターに */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* 影 */
+    transition: background-color 0.3s ease; /* 背景色の変化を滑らかに */
+}
+
+/* ハンバーガーメニューボタンにマウスを乗せた時のスタイル */
+.menu-toggle:hover {
+    background-color: #0056b3; /* 背景色を濃くする */
+}
+
+/* ハンバーガーメニューの各棒 */
+.menu-toggle .bar {
+    width: 100%; /* 親要素（ボタン）の幅に合わせる */
+    height: 4px; /* 棒の高さ */
+    background-color: white; /* 棒の色：白 */
+    border-radius: 2px; /* 棒の角を丸くする */
+    transition: all 0.3s ease; /* 全てのプロパティの変化を滑らかに */
+}
+
+/* サイドメニュー本体 */
+.side-menu {
+    position: fixed; /* 画面に固定 */
+    top: 0; /* 上からの位置 */
+    left: -300px; /* 初期状態では画面の左端より外に隠しておく */
+    width: 280px; /* メニューの幅 */
+    height: 100%; /* 高さ（画面全体） */
+    background-color: #333; /* メニューの背景色：濃いグレー */
+    color: white; /* 文字色：白 */
+    padding: 60px 20px 20px; /* 内側の余白（上部はボタンと重ならないように多めに） */
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3); /* 右側に影 */
+    transition: left 0.3s ease; /* leftプロパティの変化を滑らかに（スライドアニメーション） */
+    z-index: 999; /* ボタンより奥に（ボタンが手前に来るように） */
+    box-sizing: border-box; /* paddingがwidthに含まれるように計算される */
+    overflow-y: auto; /* コンテンツが高さに収まらない場合に縦スクロールバーを表示 */
+}
+
+/* メニューが表示された状態（JavaScriptで 'open' クラスが付与される） */
+.side-menu.open {
+    left: 0; /* 画面内にスライドして表示 */
+}
+
+.side-menu h3 {
+    margin-top: 0; /* 上の余白をなくす */
+    margin-bottom: 25px; /* 下に余白 */
+    color: #007bff; /* ステージ選択のタイトル色：青 */
+    text-align: center; /* 中央揃え */
+}
+
+.side-menu ul {
+    list-style: none; /* リストの黒丸をなくす */
+    padding: 0; /* リストのパディングをなくす */
+    margin: 0; /* リストのマージンをなくす */
+}
+
+.side-menu ul li {
+    margin-bottom: 15px; /* 各リストアイテムの下に余白 */
+}
+
+.side-menu ul li button {
+    display: block; /* ボタンをブロック要素にする（幅いっぱいに広がる） */
+    width: 100%; /* 幅を親要素の100%に */
+    padding: 12px; /* 内側の余白 */
+    background-color: #555; /* ステージ選択ボタンの背景色 */
+    color: white; /* 文字色：白 */
+    border: none; /* 境界線をなくす */
+    border-radius: 5px; /* 角を丸くする */
+    text-align: left; /* テキストを左揃え */
+    font-size: 1.1em; /* フォントサイズ */
+    cursor: pointer; /* マウスカーソルをポインターに */
+    transition: background-color 0.2s ease; /* 背景色の変化を滑らかに */
+}
+
+/* ステージ選択ボタンにマウスを乗せた時のスタイル */
+.side-menu ul li button:hover {
+    background-color: #007bff; /* ホバー時の背景色：青 */
+}
+
+/* (オプション) メニューが開いた時にメインコンテンツを少し右にずらすCSS */
+/* JavaScriptで body.classList.add('menu-open') / remove('menu-open') した場合に有効 */
+/*
+body.menu-open main#game-container {
+    transform: translateX(280px); // メニューの幅だけ右にずらす
+    transition: transform 0.3s ease; // 変化を滑らかに
+}
+*/
