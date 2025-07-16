@@ -1,30 +1,32 @@
 // data/amino_acid_karuta_data.js
 
 export const aminoAcidKarutaCards = [
- { id: 'alanine', name: 'アラニン', yomikata: 'あらにん', formula: 'CH₃CH(NH₂)COOH', image: './images/karuta_cards/alanine.png' },
-    { id: 'glycine', name: 'グリシン', yomikata: 'ぐりしん', formula: 'CH₂(NH₂)COOH', image: './images/karuta_cards/glycine.png' },
-    { id: 'valine', name: 'バリン', yomikata: 'ばりん', formula: '(CH₃)₂CHCH(NH₂)COOH', image: './images/karuta_cards/valine.png' },
-    { id: 'leucine', name: 'ロイシン', yomikata: 'ろいしん', formula: '(CH₃)₂CHCH₂CH(NH₂)COOH', image: './images/karuta_cards/leucine.png' },
-    { id: 'isoleucine', name: 'イソロイシン', yomikata: 'いそろいしん', formula: 'CH₃CH₂CH(CH₃)CH(NH₂)COOH', image: './images/karuta_cards/isoleucin.png' },
-    { id: 'proline', name: 'プロリン', yomikata: 'ぷろりん', formula: 'C₄H₈NCOOH', image: './images/karuta_cards/proline.png' },
-    { id: 'methionine', name: 'メチオニン', yomikata: 'めちおにん', formula: 'CH₃SCH₂CH₂CH(NH₂)COOH', image: './images/karuta_cards/methionine.png' },
-    { id: 'tryptophan', name: 'トリプトファン', yomikata: 'とりぷとふぁん', formula: 'C₁₁H₁₂N₂O₂', image: './images/karuta_cards/tryptophan.png' },
-    { id: 'phenylalanine', name: 'フェニルアラニン', yomikata: 'ふぇにるあらにん', formula: 'C₆H₅CH₂CH(NH₂)COOH', image: './images/karuta_cards/phenylalanine.png' },
-    { id: 'serine', name: 'セリン', yomikata: 'せりん', formula: 'HOCH₂CH(NH₂)COOH', image: './images/karuta_cards/serine.png' },
-    { id: 'threonine', name: 'スレオニン', yomikata: 'すれおにん', formula: 'CH₃CH(OH)CH(NH₂)COOH', image: './images/karuta_cards/threonine.png' },
-    { id: 'cysteine', name: 'システイン', yomikata: 'しすていん', formula: 'HSCH₂CH(NH₂)COOH', image: './images/karuta_cards/cysteine.png' },
-    { id: 'tyrosine', name: 'チロシン', yomikata: 'ちろしん', formula: 'HOC₆H₄CH₂CH(NH₂)COOH', image: './images/karuta_cards/tyrosine.png' },
-    { id: 'asparagine', name: 'アスパラギン', yomikata: 'あすぱらぎん', formula: 'H₂NCOCH₂CH(NH₂)COOH', image: './images/karuta_cards/asparagine.png' },
-    { id: 'glutamine', name: 'グルタミン', yomikata: 'ぐるたみん', formula: 'H₂NCOCH₂CH₂CH(NH₂)COOH', image: './images/karuta_cards/glutamine.png' },
-    { id: 'aspartic_acid', name: 'アスパラギン酸', yomikata: 'あすぱらぎんさん', formula: 'HOOCCH₂CH(NH₂)COOH', image: './images/karuta_cards/aspartic_acid.png' },
-    { id: 'glutamic_acid', name: 'グルタミン酸', yomikata: 'ぐるたみんさん', formula: 'HOOCCH₂CH₂CH(NH₂)COOH', image: './images/karuta_cards/glutamic_acid.png' },
-    { id: 'lysine', name: 'リシン', yomikata: 'りしん', formula: 'H₂N(CH₂)₄CH(NH₂)COOH', image: './images/karuta_cards/lysine.png' },
-    { id: 'arginine', name: 'アルギニン', yomikata: 'あるぎにん', formula: 'HN=C(NH₂)NH(CH₂)₃CH(NH₂)COOH', image: './images/karuta_cards/arginine.png' },
-    { id: 'histidine', name: 'ヒスチジン', yomikata: 'ひすちじん', formula: 'C₃H₃N₂CH₂CH(NH₂)COOH', image: './images/karuta_cards/histidine.png' }
+    { id: 'gly', name: 'グリシン', yomikata: 'ぐりしん', image: './images/karuta_cards/gly.png', ph: 'neutral' },
+    { id: 'ala', name: 'アラニン', yomikata: 'あらにん', image: './images/karuta_cards/ala.png', ph: 'neutral' },
+    { id: 'val', name: 'バリン', yomikata: 'ばりん', image: './images/karuta_cards/val.png', ph: 'neutral' },
+    { id: 'leu', name: 'ロイシン', yomikata: 'ろいしん', image: './images/karuta_cards/leu.png', ph: 'neutral' },
+    { id: 'ile', name: 'イソロイシン', yomikata: 'いそろいしん', image: './images/karuta_cards/ile.png', ph: 'neutral' },
+    { id: 'ser', name: 'セリン', yomikata: 'せりん', image: './images/karuta_cards/ser.png', ph: 'neutral' },
+    { id: 'pro', name: 'プロリン', yomikata: 'ぷろりん', image: './images/karuta_cards/pro.png', ph: 'neutral' },
+    { id: 'thr', name: 'トレオニン', yomikata: 'とれおにん', image: './images/karuta_cards/thr.png', ph: 'neutral' },
+    { id: 'asn', name: 'アスパラギン', yomikata: 'あすぱらぎん', image: './images/karuta_cards/asn.png', ph: 'neutral' },
+    { id: 'gln', name: 'グルタミン', yomikata: 'ぐるたみん', image: './images/karuta_cards/gln.png', ph: 'neutral' },
+    { id: 'cys', name: 'システイン', yomikata: 'しすていん', image: './images/karuta_cards/cys.png', ph: 'neutral' },
+    { id: 'met', name: 'メチオニン', yomikata: 'めちおにん', image: './images/karuta_cards/met.png', ph: 'neutral' },
+    { id: 'phe', name: 'フェニルアラニン', yomikata: 'ふぇにるあらにん', image: './images/karuta_cards/phe.png', ph: 'neutral' },
+    { id: 'tyr', name: 'チロシン', yomikata: 'ちろしん', image: './images/karuta_cards/tyr.png', ph: 'neutral' },
+    { id: 'typ', name: 'トリプトファン', yomikata: 'とりぷとふぁん', image: './images/karuta_cards/trp.png', ph: 'neutral' },
+    
+    { id: 'his', name: 'ヒスチジン', yomikata: 'ひすちじん', image: './images/karuta_cards/his.png', ph: 'basic' },
+    { id: 'lys', name: 'リシン', yomikata: 'りしん', image: './images/karuta_cards/lys.png', ph: 'basic' },
+    { id: 'arg', name: 'アルギニン', yomikata: 'あるぎにん', image: './images/karuta_cards/arg.png', ph: 'basic' },
+
+    { id: 'asp', name: 'アスパラギン酸', yomikata: 'あすぱらぎんさん', image: './images/karuta_cards/asp.png', ph: 'acid' },
+    { id: 'glu', name: 'グルタミン酸', yomikata: 'ぐるたみんさん', image: './images/karuta_cards/glu.png', ph: 'acid' },
 ];
 
 // 必須アミノ酸（参考情報として）
 export const essentialAminoAcids = [
-    'valine', 'leucine', 'isoleucine', 'methionine', 'tryptophan',
-    'phenylalanine', 'threonine', 'lysine', 'histidine'
+    'val', 'leu', 'ile', 'met', 'trp',
+    'phe', 'thr', 'lys', 'his'
 ];
