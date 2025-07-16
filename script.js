@@ -18,8 +18,11 @@ const targetMoleculeImg = document.getElementById('target-molecule-img');  // �
 const targetMoleculeName = document.getElementById('target-molecule-name'); // 目標分子の名前表示要素
 const monomerPool = document.getElementById('monomer-pool');              // 利用可能なモノマーを表示するエリア
 const buildArea = document.getElementById('build-area');                  // モノマーをドラッグ＆ドロップする結合エリア
+const buildAreaSection = document.getElementById('build-area-section');   //自分で追加
+const TargetMoleculeSection = document.getElementById('target-molecule-section');
 const checkButton = document.getElementById('check-button');              // 結合チェックボタン
 const feedbackMessage = document.getElementById('feedback-message');      // 正誤フィードバックメッセージ表示エリア
+
 
 // ステージ選択メニュー関連の要素const startScreen = document.getElementById('start-screen'); // スタート画面の要素
 const menuToggleButton = document.getElementById('menu-toggle');    // ハンバーガーメニューボタン (≡)
@@ -43,6 +46,8 @@ const karutaTotalCardsElement = document.getElementById('karuta-total-cards');
 const karutaTimerElement = document.getElementById('karuta-timer');
 const readCardButton = document.getElementById('read-card-button');
 const karutaMessageElement = document.getElementById('karuta-message');
+
+
 
 // ==========================================================
 // 3. グローバル変数
@@ -71,7 +76,7 @@ function initializeGame() {
     startGameButton.addEventListener('click', () => {
         startScreen.style.display = 'none'; // スタート画面を非表示に
         gameContainer.style.display = 'grid'; // ゲーム画面を表示（CSSのgridレイアウトに戻す）
-        loadStage(0); // 最初のステージ（インデックス0）をロードしてゲーム開始
+        loadStage(3); // 最初のステージ（インデックス0）をロードしてゲーム開始
     });
 
     showStageSelectButton.addEventListener('click', () => {
@@ -83,6 +88,7 @@ function initializeGame() {
         // loadStageは、ステージ選択から実際にステージが選ばれたときに呼び出されるべきですが、
         // 念のため初期ステージをロードしておくと、画面が空白になりません。
         loadStage(currentStageIndex);
+        console.log(currentStageIndex);
     });
 
     // サイドメニューのステージリストを生成する
@@ -128,6 +134,9 @@ function loadStage(stageIndex) {
     if (stage.gametype === 'puzzle') {
         // --- パズルゲームのロジック ---
 
+        buildAreaSection.style.display = 'flex'; //自分で追加。結合エリアを表示する。
+        TargetMoleculeSection.style.display = 'flex'; //目標分子エリア表示。
+
         // 現在のステージの目標分子データを allProducts からIDで検索します。
         const target = allProducts.find(p => p.id === stage.target);
         if (!target) {
@@ -172,16 +181,20 @@ function loadStage(stageIndex) {
         });
 
     } else if (stage.gametype === 'karuta') {
+        console.log(stage.gametype);
         // --- かるたゲームのロジック ---
 
         // パズルゲームのUI要素を非表示にする
+        buildArea.style.display = 'none'; // 結合エリアを非表示
         gameHeader.style.display = 'none'; // ヘッダーを非表示
         targetMoleculeImg.style.display = 'none'; // 目標分子画像を非表示
         targetMoleculeName.style.display = 'none'; // 目標分子名を非表示
-        buildArea.style.display = 'none'; // 結合エリアを非表示
+        
         checkButton.style.display = 'none'; // チェックボタンを非表示
         targetMoleculeName.style.display = 'none';
-        buildArea.style.display = 'none';
+        
+        buildAreaSection.style.display = 'none';　//結合エリア非表示
+        TargetMoleculeSection.style.display = 'none';
 
         // かるたゲームのUI要素を表示
         karutaGameUI.style.display = 'flex';
@@ -470,7 +483,6 @@ function initKarutaGame() {
     karutaScoreElement.textContent = karutaScore;
     karutaMessageElement.textContent = '「読み上げる」ボタンを押すとアミノ酸の名前が読み上げられます。'; // メッセージ変更
     readCardButton.disabled = false;
-
     // 現在の読み上げ対象をリセット
     currentReadingCard = null;
     // 古い読み上げ表示をクリア
