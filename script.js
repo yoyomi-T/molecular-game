@@ -180,6 +180,8 @@ function loadStage(stageIndex) {
         targetMoleculeName.style.display = 'none'; // 目標分子名を非表示
         buildArea.style.display = 'none'; // 結合エリアを非表示
         checkButton.style.display = 'none'; // チェックボタンを非表示
+        targetMoleculeName.style.display = 'none';
+        buildArea.style.display = 'none';
 
         // かるたゲームのUI要素を表示
         karutaGameUI.style.display = 'flex';

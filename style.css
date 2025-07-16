@@ -142,6 +142,7 @@ section {
 #monomer-pool-section {
     grid-column: 1 / -1; /* 1列目から最後の列まで全てを占有 */
     grid-row: 3 / 4; /* 3行目 */
+    text-align:  center;
 }
 /* ==========================================================
    目標分子表示エリア (Target Molecule Display)
@@ -167,7 +168,7 @@ section {
     min-height: 200px; /* 最小の高さ */
     border: 3px dashed #007bff; /* 破線の境界線：青 */
     background-color: #e9f7fe; /* 背景色：薄い水色 */
-    display: flex; /* Flexboxを使って内部の要素を配置 */
+    display: flex !important; /* Flexboxを使って内部の要素を配置 */
     justify-content: center; /* 横方向の中央揃え */
     align-items: center; /* 縦方向の中央揃え */
     flex-wrap: wrap; /* ドロップされた要素が複数並ぶように折り返す */
@@ -177,11 +178,19 @@ section {
     transition: background-color 0.3s ease, border-color 0.3s ease; /* 背景色と境界線の変化を滑らかに */
 }
 
+/* かるたモードで適用するスタイル */
+.karuta-mode-no-border {
+    border: none !important; /* ボーダーを削除（!importantで優先） */
+    box-shadow: none !important; /* シャドウを削除（!importantで優先） */
+    background-color: transparent !important; /* 背景色を透明に（必要であれば） */
+}
+
 /* ドラッグオーバー時の結合エリアのスタイル */
 #build-area.drag-over {
     background-color: #cce7fa; /* 背景色を濃くする */
     border-color: #0056b3; /* 境界線の色を濃くする */
 }
+
 
 /* ==========================================================
    モノマーカード (Monomer Card)
@@ -208,6 +217,17 @@ section {
     max-width: 100px; /* 画像の最大幅 */
     height: auto; /* 高さは自動調整 */
     margin-bottom: 5px; /* 下に余白 */
+
+    /* 画像のドラッグを無効化 */
+    -webkit-user-drag: none; /* Safari, Chrome */
+    -khtml-user-drag: none;   /* Konqueror HTML */
+    -moz-user-drag: none;     /* Firefox */
+    -o-user-drag: none;       /* Opera */
+    user-drag: none;          /* 標準 */
+
+    /* 画像へのポインターイベントを親要素に透過させる */
+    /* これにより、画像上のクリックやドラッグが親要素で検知されやすくなります */
+    pointer-events: none;
 }
 
 /* ==========================================================
