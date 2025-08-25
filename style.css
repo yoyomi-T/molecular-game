@@ -224,7 +224,6 @@ section {
     -khtml-user-drag: none;   /* Konqueror HTML */
     -moz-user-drag: none;     /* Firefox */
     -o-user-drag: none;       /* Opera */
-    user-drag: none;          /* 標準 */
 
     /* 画像へのポインターイベントを親要素に透過させる */
     /* これにより、画像上のクリックやドラッグが親要素で検知されやすくなります */
@@ -467,7 +466,6 @@ button:hover {
     -khtml-user-drag: none;   /* Konqueror HTML */
     -moz-user-drag: none;     /* Firefox */
     -o-user-drag: none;       /* Opera */
-    user-drag: none;          /* 標準 */
     
     /* 画像へのポインターイベントを親要素に透過させる */
     /* これにより、画像上のクリックやドラッグが親要素で検知されやすくなります */

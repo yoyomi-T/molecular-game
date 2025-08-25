@@ -42,11 +42,18 @@
         </section>
 
         <div id="karuta-game-ui" style="display: none;">
+            <h2>カルタゲーム</h2>
+            <select id="karuta-difficulty">
+                <option value="normal">普通</option>
+                <option value="hard">難しい</option>
+            </select>
+            <div id="karuta-condition"></div>
             <div class="karuta-score-area">
                 <p>得点: <span id="karuta-score">0</span> / <span id="karuta-total-cards">0</span></p>
                 <p id="karuta-timer">残り時間: --秒</p>
             </div>
             <button id="read-card-button">読み上げる</button>
+            <div id="karuta-condition" style="margin-bottom: 8px; font-weight: bold;"></div>
             <p id="karuta-message" class="message"></p>
         </div>
         <section id="monomer-pool-section">

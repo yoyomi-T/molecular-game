@@ -8,6 +8,7 @@ import { stages } from './data/stages.js';          // ステージの定義
 import { allMonomers } from './data/monomer.js';    // すべてのモノマーの定義
 import { allProducts } from './data/products.js';    // すべての完成分子（生成物）の定義
 import { aminoAcidKarutaCards } from './data/amino_acid_karuta_data.js';
+import { karutaConditions } from './data/karuta_conditions.js';
 // import { aminoAcidKarutaCards } from './data/amino_acid_karuta_data.js'; // アミノ酸かるたステージで必要になったらインポート
 
 // ==========================================================
@@ -46,7 +47,7 @@ const karutaTotalCardsElement = document.getElementById('karuta-total-cards');
 const karutaTimerElement = document.getElementById('karuta-timer');
 const readCardButton = document.getElementById('read-card-button');
 const karutaMessageElement = document.getElementById('karuta-message');
-
+const karutaConditionElement = document.getElementById('karuta-condition'); 
 
 
 // ==========================================================
@@ -57,7 +58,7 @@ let droppedMonomers = [];      // 結合エリアに現在ドロップされて�
 let currentStageIndex = 0;     // 現在アクティブなステージのインデックス（stages配列の何番目か）
 
 let karutaCardsInPlay = [];
-let currentReadingCard = null;
+//let currentReadingCard = null;
 let karutaScore = 0;
 let karutaTimer = null;
 let timeLeft = 0;
@@ -95,7 +96,6 @@ function initializeGame() {
     renderStageList(); // これを initializeGame 内で呼び出すことで、
                        // スタート画面が表示されている間にリストが裏で準備される
 }
-
 // ==========================================================
 // 5. ステージをロードする関数
 // 指定されたインデックスのステージデータを読み込み、UIを更新します。
@@ -473,6 +473,22 @@ document.addEventListener('click', (e) => {
 // ==========================================================
 // 10. かるたゲームロジック 
 // ==========================================================
+let karutaDifficulty = "normal"; // デフォルト難易度
+let karutaTargetCard = null;     // お題カード
+let currentConditionIndex = 0;
+let currentConditionTimer = null;
+let currentConditionSet = null;
+
+// 難易度選択のイベント
+document.getElementById('karuta-difficulty').addEventListener('change', (e) => {
+    karutaDifficulty = e.target.value;
+});
+
+// 難易度ごとの条件文
+const KARUTA_CONDITIONS = {
+    normal: "分子式を見て正しい札を取ってください。",
+    hard: "名前を聞いて正しい札を取ってください。（分子式は隠れます）"
+};
 
 function initKarutaGame() {
     karutaScore = 0;
@@ -481,26 +497,15 @@ function initKarutaGame() {
     shuffleArray(karutaCardsInPlay);
     karutaTotalCardsElement.textContent = karutaCardsInPlay.length;
     karutaScoreElement.textContent = karutaScore;
-    karutaMessageElement.textContent = '「読み上げる」ボタンを押すとアミノ酸の名前が読み上げられます。'; // メッセージ変更
+    karutaMessageElement.textContent = '「読み上げる」ボタンを押すと条件が順に表示されます。';
     readCardButton.disabled = false;
-    // 現在の読み上げ対象をリセット
-    currentReadingCard = null;
-    // 古い読み上げ表示をクリア
-    karutaGameUI.querySelector('.current-reading-name')?.remove();
-
-
-    renderKarutaCards();
+    karutaConditionElement.textContent = '';
     clearInterval(karutaTimer);
     karutaTimerElement.textContent = `残り時間: ${timeLeft}秒`;
+    renderKarutaCards();
 }
 
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-}
-
+// --- かるたカード表示 ---
 function renderKarutaCards() {
     monomerPool.innerHTML = '';
     monomerPool.classList.add('karuta-card-display');
@@ -526,112 +531,75 @@ function renderKarutaCards() {
         formulaP.textContent = card.formula;
         karutaCardElement.appendChild(formulaP);
 
-        // ★読み仮名要素を追加 (画面には表示しないが、音声合成のためにデータとして保持)
-        const yomikataSpan = document.createElement('span');
-        yomikataSpan.classList.add('karuta-card-yomikata');
-        yomikataSpan.textContent = card.yomikata;
-        yomikataSpan.style.display = 'none'; // 画面には表示しない
-        karutaCardElement.appendChild(yomikataSpan);
-
         karutaCardElement.addEventListener('click', handleKarutaCardClick);
         monomerPool.appendChild(karutaCardElement);
     });
 }
 
+// --- 7秒ごとに条件を表示し始める ---
+function startKarutaRound() {
+    // お題をランダムで1つ選ぶ
+    currentConditionSet = karutaConditions[Math.floor(Math.random() * karutaConditions.length)];
+    currentConditionIndex = 0;
+    showNextCondition();
+
+    if (currentConditionTimer) clearInterval(currentConditionTimer);
+    currentConditionTimer = setInterval(() => {
+        currentConditionIndex++;
+        if (currentConditionIndex < currentConditionSet.conditions.length) {
+            showNextCondition();
+        } else {
+            clearInterval(currentConditionTimer);
+        }
+    }, 7000);
+
+    karutaMessageElement.textContent = '条件をヒントに正しい札をクリックしてください！';
+    readCardButton.disabled = true;
+    if (!karutaTimer) {
+        karutaTimer = setInterval(updateKarutaTimer, 1000);
+    }
+}
+
+// --- 条件文を表示 ---
+function showNextCondition() {
+    karutaConditionElement.textContent = `条件: ${currentConditionSet.conditions[currentConditionIndex]}`;
+}
+
+// --- タイマー更新 ---
 function updateKarutaTimer() {
     timeLeft--;
     karutaTimerElement.textContent = `残り時間: ${timeLeft}秒`;
-
     if (timeLeft <= 0) {
         endKarutaGame('時間切れ！');
     }
 }
 
-// 読み上げ開始（次の札を提示）(変更あり)
-function startKarutaRound() {
-    if (karutaCardsInPlay.length === 0) {
-        endKarutaGame('全ての札を取りました！');
-        return;
-    }
-
-    readCardButton.disabled = true; // ボタンを無効化
-
-    // すでに表示されている読み上げ名を削除
-    const oldReadingName = karutaGameUI.querySelector('.current-reading-name');
-    if (oldReadingName) {
-        oldReadingName.remove();
-    }
-
-    // まだ取られていない札の中からランダムに選択
-    const remainingCards = karutaCardsInPlay.filter(card => !document.querySelector(`.karuta-card[data-id="${card.id}"].correct`));
-
-    if (remainingCards.length === 0) {
-        endKarutaGame('全ての札を取りました！');
-        return;
-    }
-
-    currentReadingCard = remainingCards[Math.floor(Math.random() * remainingCards.length)];
-
-    // ★読み上げるアミノ酸の名前をUIに表示
-    const readingNameElement = document.createElement('p');
-    readingNameElement.classList.add('current-reading-name');
-    readingNameElement.textContent = `探すのは「${currentReadingCard.name}」です！`;
-    karutaGameUI.insertBefore(readingNameElement, readCardButton.nextSibling);
-
-    karutaMessageElement.textContent = '対応する札をクリックしてください！';
-    karutaMessageElement.classList.remove('error', 'success');
-
-
-    // ★音声合成の部分を再度有効化し、yomikataを読み上げる
-    const utterance = new SpeechSynthesisUtterance(currentReadingCard.yomikata); // yomikata を読み上げる
-    utterance.lang = SPEECH_VOICE;
-    utterance.rate = 0.8;
-
-    utterance.onend = () => {
-        readCardButton.disabled = false; // 読み上げ終了後にボタンを有効化
-        if (!karutaTimer) {
-            karutaTimer = setInterval(updateKarutaTimer, 1000);
-        }
-    };
-
-    window.speechSynthesis.speak(utterance);
-}
-
+// --- 札クリック時の判定 ---
 function handleKarutaCardClick(e) {
-    if (!currentReadingCard) {
+    if (!currentConditionSet) {
         karutaMessageElement.textContent = 'まず「読み上げる」ボタンを押してください。';
         karutaMessageElement.classList.add('error');
         setTimeout(() => karutaMessageElement.classList.remove('error'), 2000);
         return;
     }
-
     const clickedCardId = e.currentTarget.dataset.id;
     const clickedCardElement = e.currentTarget;
 
-    if (clickedCardId === currentReadingCard.id) {
+    if (clickedCardId === currentConditionSet.id) {
         karutaScore++;
         karutaScoreElement.textContent = karutaScore;
         karutaMessageElement.textContent = '正解！👍';
         karutaMessageElement.classList.remove('error');
         karutaMessageElement.classList.add('success');
-
         clickedCardElement.classList.add('correct');
         clickedCardElement.addEventListener('animationend', () => {
             clickedCardElement.style.display = 'none';
-        });
-
-        // 正解後、現在の読み上げ表示を削除
-        const oldReadingName = karutaGameUI.querySelector('.current-reading-name');
-        if (oldReadingName) {
-            oldReadingName.remove();
-        }
-
-        currentReadingCard = null;
-        // 正解後、自動的に次のラウンドを開始
-        setTimeout(() => {
+            // 札が消えた後に次の条件を表示
+            karutaConditionElement.textContent = '';
             karutaMessageElement.classList.remove('success');
             startKarutaRound();
-        }, 1000); // 1秒後に次の読み上げを開始
+        }, { once: true });
+        clearInterval(currentConditionTimer);
     } else {
         karutaMessageElement.textContent = '不正解！もう一度よく見てください。🤔';
         karutaMessageElement.classList.remove('success');
@@ -643,32 +611,28 @@ function handleKarutaCardClick(e) {
     }
 }
 
+// --- ゲーム終了 ---
 function endKarutaGame(message) {
     clearInterval(karutaTimer);
+    clearInterval(currentConditionTimer);
     readCardButton.disabled = true;
-    currentReadingCard = null;
-
-    karutaMessageElement.textContent = `${message} あなたの得点: ${karutaScore} / ${aminoAcidKarutaCards.length}`;
-    if (karutaScore === aminoAcidKarutaCards.length) {
-        karutaMessageElement.classList.add('success');
-    } else {
-        karutaMessageElement.classList.add('error');
-    }
-
-    // ゲーム終了後、読み上げ表示を削除
-    const oldReadingName = karutaGameUI.querySelector('.current-reading-name');
-    if (oldReadingName) {
-        oldReadingName.remove();
-    }
-
+    karutaMessageElement.textContent = `${message} あなたの得点: ${karutaScore} / ${karutaCardsInPlay.length}`;
     setTimeout(() => {
         karutaMessageElement.textContent = 'もう一度プレイするにはステージ選択から！';
         karutaMessageElement.classList.remove('success', 'error');
     }, 5000);
 }
 
-// ==========================================================
-// 11. ゲーム開始のトリガー
-// ページが完全に読み込まれたときに `initializeGame` 関数を呼び出します。
-// ==========================================================
+// --- シャッフル関数 ---
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+// --- 「読み上げる」ボタンにイベントをつける ---
+readCardButton.addEventListener('click', startKarutaRound);
+
+// --- 必要に応じて初期化関数を呼ぶ ---
 window.onload = initializeGame;
